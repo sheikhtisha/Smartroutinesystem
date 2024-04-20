@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "185754081760",
+    "project_id": "smart-routine-system-ea7a1",
+    "storage_bucket": "smart-routine-system-ea7a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185754081760:android:186700f4221fab9407f385",
+        "android_client_info": {
+          "package_name": "com.example.smartroutinesystem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaq_oGSiNzr-ZwspWWly-CVALKdb3p42M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
