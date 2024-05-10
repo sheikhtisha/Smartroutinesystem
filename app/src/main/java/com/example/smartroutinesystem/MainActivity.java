@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Get the Firebase Realtime Database reference
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
                 // Create a new User object with the input data
                 User user = new User(userEmail, userPassword, userFullName, userPhoneNumber, userRollNumber, userSeries, userDepartment);
@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 String userId = databaseReference.push().getKey();
 
                 // Write the user data to the database under the unique key
-                databaseReference.child(userId).setValue(user);
+                databaseReference.child("users").child(userId).setValue(user);
+                Toast.makeText(MainActivity.this,"Data saved", Toast.LENGTH_SHORT).show();
 
                 // Clear EditText fields after saving
                 email.setText("");
