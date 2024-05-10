@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+
         saveToRealtimeDatabase = findViewById(R.id.saveToRealtimeDatabase);
 
         saveToRealtimeDatabase.setOnClickListener(new View.OnClickListener() {
@@ -74,9 +75,10 @@ public class MainActivity extends AppCompatActivity {
                 String userEmail = email.getText().toString().trim();
                 String userPassword = password.getText().toString().trim();
 
+
                 if (!userEmail.isEmpty() && !userPassword.isEmpty()) {
                     // Assuming you have a User class representing your data structure
-                    User user = new User(userEmail, userPassword);
+
 
                     // Get the Firebase Realtime Database reference
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");

@@ -4,23 +4,23 @@ public class User {
     private String email;
     private String password;
     private String fullName;
-    private String dept;
-    private String series;
-    private String rollno;
     private String phoneNumber;
+    private String rollNumber;
+    private String series;
+    private String department;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String email, String password, String fullName, String dept, String series, String rollno, String phoneNumber) {
+    public User(String email, String password, String fullName, String phoneNumber, String rollNumber, String series, String department) {
         this.email = email;
         this.password = password;
         this.fullName = fullName;
-        this.dept = dept;
-        this.series = series;
-        this.rollno = rollno;
         this.phoneNumber = phoneNumber;
+        this.rollNumber = rollNumber;
+        this.series = series;
+        this.department = department;
     }
 
     public String getEmail() {
@@ -47,12 +47,20 @@ public class User {
         this.fullName = fullName;
     }
 
-    public String getDepartment() {
-        return dept;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setDepartment(String dept) {
-        this.dept = dept;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getRollNumber() {
+        return rollNumber;
+    }
+
+    public void setRollNumber(String rollNumber) {
+        this.rollNumber = rollNumber;
     }
 
     public String getSeries() {
@@ -63,19 +71,11 @@ public class User {
         this.series = series;
     }
 
-    public String getRollNo() {
-        return rollno;
+    public String getDepartment() {
+        return department;
     }
 
-    public void setRollNo(String rollno) {
-        this.rollno = rollno;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }
