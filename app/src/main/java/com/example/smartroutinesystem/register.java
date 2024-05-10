@@ -18,9 +18,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class register<Register> extends AppCompatActivity {
-    TextInputEditText editTextEmail, editTextPassword;
+public class register extends AppCompatActivity {
+    TextInputEditText editTextEmail, editTextPassword, editTextFullName, editTextPhoneNumber;
     Button buttonReg;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
@@ -44,6 +46,8 @@ public class register<Register> extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
+        editTextFullName = findViewById(R.id.fullName);
+        editTextPhoneNumber = findViewById(R.id.phoneNumber);
         buttonReg = findViewById(R.id.btn_register);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
@@ -57,22 +61,19 @@ public class register<Register> extends AppCompatActivity {
 
         });
 
-
-
         buttonReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                String email, password;
+                String email, password, fullName, phoneNumber;
                 email = String.valueOf(editTextEmail.getText());
                 password = String.valueOf(editTextPassword.getText());
+                fullName = String.valueOf(editTextFullName.getText());
+                phoneNumber = String.valueOf(editTextPhoneNumber.getText());
 
-                if (TextUtils.isEmpty(email)){
-                    Toast.makeText(register.this, "Enter email", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(password)){
-                    Toast.makeText(register.this, "Enter password", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(fullName) || TextUtils.isEmpty(phoneNumber)) {
+                    Toast.makeText(register.this, "All fields are required", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
@@ -82,16 +83,21 @@ public class register<Register> extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(Register.this, "Account created.",
-                                            Toast.LENGTH_SHORT).show();
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    String userId = user.getUid();
+                                    // Create a user object with all the details
+                                    User userData = new User(email, password, fullName, phoneNumber);
+
+                                    // Save the user data to Firebase Realtime Database
+                                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+                                    databaseReference.child(userId).setValue(userData);
+
+                                    Toast.makeText(register.this, "Account created successfully", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), login.class);
                                     startActivity(intent);
                                     finish();
                                 } else {
-                                    // If sign in fails, display a message to the user.
-                                    Toast.makeText(Register.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-
+                                    Toast.makeText(register.this, "Registration failed", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
