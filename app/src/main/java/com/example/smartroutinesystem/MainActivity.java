@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smartroutinesystem.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -26,21 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText password;
     private Button saveToRealtimeDatabase;
 
-    ActivityMainBinding binding;
-    String Email, Password, FullName, Department, Series, RollNo, PhoneNumber;
-    FirebaseDatabase db;
-    DatabaseReference reference;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        binding.buttonReg.setOnClickListener(new View.OnClickListener(){
-
-                                             }
+        setContentView(R.layout.activity_main);
 
         auth = FirebaseAuth.getInstance();
         button = findViewById(R.id.logout);
