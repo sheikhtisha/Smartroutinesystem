@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".RoutineInputActivity">
+
+    <!-- Department Spinner -->
+    <Spinner
+        android:id="@+id/deptSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Select Department"
+        android:textSize="16sp" />
+
+    <!-- Batch Spinner -->
+    <Spinner
+        android:id="@+id/batchSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/deptSpinner"
+        android:layout_marginTop="8dp"
+        android:hint="Select Batch"
+        android:textSize="16sp" />
+
+    <!-- Section Spinner -->
+    <Spinner
+        android:id="@+id/sectionSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/batchSpinner"
+        android:layout_marginTop="8dp"
+        android:hint="Select Section"
+        android:textSize="16sp" />
+
+    <!-- Day Spinner -->
+    <Spinner
+        android:id="@+id/daySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/sectionSpinner"
+        android:layout_marginTop="8dp"
+        android:hint="Select Day"
+        android:textSize="16sp" />
+
+    <!-- Time Spinner -->
+    <Spinner
+        android:id="@+id/timeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/daySpinner"
+        android:layout_marginTop="8dp"
+        android:hint="Select Time"
+        android:textSize="16sp" />
+
+
+    <!-- Location EditText -->
+    <EditText
+        android:id="@+id/locationEditText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/timeSpinner"
+        android:layout_marginTop="8dp"
+        android:hint="Enter Class"
+        android:textSize="16sp" />
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/locationEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Save" />
+
+</RelativeLayout>

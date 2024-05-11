@@ -17,4 +17,43 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string-array name="Days">
+        <item>Saturday</item>
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+    </string-array>
+    <string-array name="Series">
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+    </string-array>
+    <string-array name="Depts">
+        <item>CSE</item>
+        <item>EEE</item>
+        <item>ME</item>
+        <item>MTE</item>
+        <item>CE</item>
+        <item>ECE</item>
+        <item>ETE</item>
+    </string-array>
+    <string-array name="time">
+        <item>8.00 AM</item>
+        <item>8.50 AM</item>
+        <item>9.40 AM</item>
+        <item>10.50 AM</item>
+        <item>11.40 AM</item>
+        <item>12.30 PM</item>
+        <item>2.30 PM</item>
+        <item>3.20 PM</item>
+        <item>4.10 PM</item>
+    </string-array>
+    <string-array name="sec">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+    </string-array>
 </resources>
