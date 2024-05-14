@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Title for Full Name EditText -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Full Name"/>
+
+    <!-- EditText for Full Name -->
+    <EditText
+        android:id="@+id/editTextFullName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your full name"/>
+
+    <!-- Title for Department EditText -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Department"/>
+
+    <!-- EditText for Department -->
+    <EditText
+        android:id="@+id/editTextDepartment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your department"/>
+
+    <!-- Title for Roll Number EditText -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Roll Number"/>
+
+    <!-- EditText for Roll Number -->
+    <EditText
+        android:id="@+id/editTextRollNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your roll number"/>
+
+    <!-- Title for Series EditText -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Series"/>
+
+    <!-- EditText for Series -->
+    <EditText
+        android:id="@+id/editTextSeries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your series"/>
+
+    <!-- Button to Update Profile -->
+    <Button
+        android:id="@+id/buttonUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:text="Update"/>
+</LinearLayout>

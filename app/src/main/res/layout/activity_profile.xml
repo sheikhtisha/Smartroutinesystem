@@ -4,37 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".Home">
     <TextView
-        android:id="@+id/user_details"
+        android:id="@+id/tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="Welcome User!"
         android:textSize="18sp" />
     <TextView
-        android:id="@+id/userIdCheck"
+        android:id="@+id/tv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
+        android:layout_below="@+id/tv1"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv2"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/tv4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv3"
+        android:layout_marginTop="20dp"
         android:textSize="18sp" />
     <Button
-        android:id="@+id/btn_rtn"
-        android:text="Routine"
+        android:id="@+id/btn_change"
+        android:text="Change"
         android:layout_width="wrap_content"
-        android:layout_below="@+id/userIdCheck"
+        android:layout_below="@+id/tv4"
         android:layout_height="wrap_content"
         android:layout_marginLeft="150dp"/>
-    <Button
-        android:id="@+id/btn_home"
-        android:text="Home"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/btn_rtn"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"/>
-
-
 </RelativeLayout>

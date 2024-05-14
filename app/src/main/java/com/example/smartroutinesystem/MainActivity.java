@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     TextView IdShow;
-    Button rutine;
+    Button rutine,home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +32,19 @@ public class MainActivity extends AppCompatActivity {
         IdShow=findViewById(R.id.userIdCheck);
         auth = FirebaseAuth.getInstance();
         rutine=findViewById(R.id.btn_rtn);
-
+        home=findViewById(R.id.btn_home);
         rutine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),RoutineInputActivity.class);
                 startActivity(intent);
+                finish();
+            }
+        });
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Home.class));
                 finish();
             }
         });
@@ -69,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 auth.signOut();
                 startActivity(new Intent(MainActivity.this, login.class));
                 finish();
+                return true;
+            case R.id.menu_profile:
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                 return true;
             // Add more cases for other options like settings profile, etc.
             default:
