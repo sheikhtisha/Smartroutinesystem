@@ -26,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class register extends AppCompatActivity {
     EditText editTextEmail, editTextPassword, editTextFullName, editTextPhoneNumber, editTextRollNumber, editTextSeries;
-    Spinner departmentSpinner;
+    Spinner departmentSpinner, sectionSpinner;
     Button buttonReg;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
@@ -55,6 +55,7 @@ public class register extends AppCompatActivity {
         editTextRollNumber = findViewById(R.id.rollNumber);
         editTextSeries = findViewById(R.id.series);
         departmentSpinner = findViewById(R.id.departmentSpinner);
+        sectionSpinner= findViewById(R.id.sectionSpinner);
         buttonReg = findViewById(R.id.btn_register);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
@@ -68,6 +69,15 @@ public class register extends AppCompatActivity {
         departmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // attaching data adapter to spinner
         departmentSpinner.setAdapter(departmentAdapter);
+
+        ArrayAdapter<CharSequence> secAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.sec,
+                android.R.layout.simple_spinner_item
+        );
+        secAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        sectionSpinner.setAdapter(secAdapter);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +99,7 @@ public class register extends AppCompatActivity {
                 String rollNumber = editTextRollNumber.getText().toString().trim();
                 String series = editTextSeries.getText().toString().trim();
                 String department = departmentSpinner.getSelectedItem().toString();
+                String section = sectionSpinner.getSelectedItem().toString();
 
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(fullName) || TextUtils.isEmpty(phoneNumber) || TextUtils.isEmpty(rollNumber) || TextUtils.isEmpty(series)) {
                     Toast.makeText(register.this, "All fields are required", Toast.LENGTH_SHORT).show();
@@ -105,7 +116,7 @@ public class register extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     String userId = user.getUid();
                                     // Create a user object with all the details
-                                    User userData = new User(email, password, fullName, phoneNumber, rollNumber, series, department);
+                                    User userData = new User(email, password, fullName, phoneNumber, rollNumber, series, department,section);
 
                                     // Save the user data to Firebase Realtime Database
                                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
