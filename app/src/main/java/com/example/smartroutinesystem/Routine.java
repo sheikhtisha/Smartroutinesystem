@@ -6,19 +6,23 @@ public class Routine {
     private String section;
     private String day;
     private String time;
-    private String location;
+    private String teacher;
+    private String course;
+    private String room;
 
     public Routine() {
         // Default constructor required for Firebase
     }
 
-    public Routine(String dept, String batch, String section, String day, String time, String location) {
+    public Routine(String dept, String batch, String section, String day, String time, String teacher, String course, String room) {
         this.dept = dept;
         this.batch = batch;
         this.section = section;
         this.day = day;
         this.time = time;
-        this.location = location;
+        this.teacher = teacher;
+        this.course = course;
+        this.room = room;
     }
 
     public String getDept() {
@@ -61,11 +65,27 @@ public class Routine {
         this.time = time;
     }
 
-    public String getLocation() {
-        return location;
+    public String getTeacher() {
+        return teacher;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
     }
 }

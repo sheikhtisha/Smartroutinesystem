@@ -54,15 +54,34 @@
         android:hint="Select Time"
         android:textSize="16sp" />
 
-
-    <!-- Location EditText -->
+    <!-- Teacher EditText -->
     <EditText
-        android:id="@+id/locationEditText"
+        android:id="@+id/teacherEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/timeSpinner"
         android:layout_marginTop="8dp"
-        android:hint="Enter Class"
+        android:hint="Enter Teacher"
+        android:textSize="16sp" />
+
+    <!-- Course EditText -->
+    <EditText
+        android:id="@+id/courseEditText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/teacherEditText"
+        android:layout_marginTop="8dp"
+        android:hint="Enter Course"
+        android:textSize="16sp" />
+
+    <!-- Room EditText -->
+    <EditText
+        android:id="@+id/roomEditText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/courseEditText"
+        android:layout_marginTop="8dp"
+        android:hint="Enter Room"
         android:textSize="16sp" />
 
     <!-- Save Button -->
@@ -70,7 +89,7 @@
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/locationEditText"
+        android:layout_below="@id/roomEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="Save" />

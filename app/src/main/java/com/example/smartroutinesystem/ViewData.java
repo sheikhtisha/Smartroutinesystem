@@ -23,4 +23,16 @@ public class ViewData {
     public String getRoom() {
         return room;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
 }

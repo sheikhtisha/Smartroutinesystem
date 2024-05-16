@@ -9,12 +9,13 @@ public class User {
     private String series;
     private String department;
     private String section;
+    private String cr;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String email, String password, String fullName, String phoneNumber, String rollNumber, String series, String department, String section) {
+    public User(String email, String password, String fullName, String phoneNumber, String rollNumber, String series, String department, String section, String cr) {
         this.email = email;
         this.password = password;
         this.fullName = fullName;
@@ -23,6 +24,7 @@ public class User {
         this.series = series;
         this.department = department;
         this.section=section;
+        this.cr=cr;
     }
 
     public String getEmail() {
@@ -83,6 +85,14 @@ public class User {
 
     public String getSection() {
         return section;
+    }
+
+    public String getCr() {
+        return cr;
+    }
+
+    public void setCr(String cr) {
+        this.cr = cr;
     }
 
     public void setSection(String section) {

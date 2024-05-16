@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         rutine=findViewById(R.id.btn_rtn);
         home=findViewById(R.id.btn_home);
+
         rutine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
