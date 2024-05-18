@@ -24,7 +24,7 @@ import java.util.List;
 
 public class Home extends AppCompatActivity {
 
-    private TextView textView1;
+    private TextView textView1,textView2,textView3,textView4;
     private RecyclerView recyclerView;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseRef, rDatabaseRef;
@@ -46,6 +46,9 @@ public class Home extends AppCompatActivity {
 
         // Initialize views
         textView1 = findViewById(R.id.tv1);
+        textView2=findViewById(R.id.tv2);
+        textView3=findViewById(R.id.tv3);
+        textView4=findViewById(R.id.tv4);
         // Get the current day of the week
         Calendar calendar = Calendar.getInstance();
         int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -66,6 +69,9 @@ public class Home extends AppCompatActivity {
                     depart = snapshot.child("department").getValue(String.class);
                     seri = snapshot.child("series").getValue(String.class);
                     sec = snapshot.child("section").getValue(String.class);
+                    textView2.setText(depart);
+                    textView3.setText(seri);
+                    textView4.setText(sec);
                     rDatabaseRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
