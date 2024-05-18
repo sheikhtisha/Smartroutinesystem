@@ -7,14 +7,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
 
-    private List<ViewData> dataList;
+    private ArrayList<ViewData> dataList;
     private Context context;
 
-    public ViewAdapter(Context context, List<ViewData> dataList) {
+    public ViewAdapter(Context context, ArrayList<ViewData> dataList) {
         this.context = context;
         this.dataList = dataList;
     }

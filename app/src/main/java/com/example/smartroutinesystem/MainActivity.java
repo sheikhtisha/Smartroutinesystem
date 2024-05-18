@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     TextView IdShow;
-    Button rutine,home;
+    Button rutine,home,test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         rutine=findViewById(R.id.btn_rtn);
         home=findViewById(R.id.btn_home);
+        test=findViewById(R.id.btn_test);
 
         rutine.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +47,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Home.class));
+                finish();
+            }
+        });
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, test.class));
                 finish();
             }
         });
