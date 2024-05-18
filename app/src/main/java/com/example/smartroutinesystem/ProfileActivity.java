@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,7 +21,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class ProfileActivity extends AppCompatActivity {
-    TextView textView1, textView2, textView3, textView4;
+    TextView textView1, textView2, textView3, textView4,textView5;
     FirebaseAuth mAuth;
     DatabaseReference mDatabaseRef;
     Button btn1;
@@ -40,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
         textView2 = findViewById(R.id.tv2);
         textView3 = findViewById(R.id.tv3);
         textView4 = findViewById(R.id.tv4);
+        textView5=findViewById(R.id.tv5);
         btn1= findViewById(R.id.btn_change);
 
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -64,12 +67,14 @@ public class ProfileActivity extends AppCompatActivity {
                         String department = dataSnapshot.child("department").getValue(String.class);
                         String rollNumber = dataSnapshot.child("rollNumber").getValue(String.class);
                         String series = dataSnapshot.child("series").getValue(String.class);
+                        String section=dataSnapshot.child("section").getValue(String.class);
 
                         // Display the retrieved data
                         textView1.setText("Name: " + fullName);
                         textView2.setText("Department: " + department);
                         textView3.setText("Roll Number: " + rollNumber);
                         textView4.setText("Series: " + series);
+                        textView5.setText("Section"+section);
                     } else {
                         // Current user not found in the database
                         textView1.setText("User data not found");
@@ -85,6 +90,28 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
             // User is not signed in
             textView1.setText("User not signed in");
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_logout:
+                mAuth.signOut();
+                startActivity(new Intent(getApplicationContext(), login.class));
+                finish();
+                return true;
+            case R.id.menu_profile:
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                return true;
+            // Add more cases for other options like settings profile, etc.
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

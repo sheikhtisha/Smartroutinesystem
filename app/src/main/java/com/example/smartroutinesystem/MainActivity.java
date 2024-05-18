@@ -16,24 +16,51 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
-    TextView IdShow;
+    TextView IdShow, welcome;
     Button rutine,home,test;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         IdShow=findViewById(R.id.userIdCheck);
+        welcome=findViewById(R.id.user_details);
         auth = FirebaseAuth.getInstance();
         rutine=findViewById(R.id.btn_rtn);
         home=findViewById(R.id.btn_home);
         test=findViewById(R.id.btn_test);
+        auth=FirebaseAuth.getInstance();
+        FirebaseUser user=auth.getCurrentUser();
+        String Uid= user.getUid();
+        reference=FirebaseDatabase.getInstance().getReference("users");
+        reference.child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String name= snapshot.child("fullName").getValue(String.class);
+                    welcome.setText("Welcome "+name);
+                }
+                else {
+                    welcome.setText("Name not found");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         rutine.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,14 +74,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Home.class));
-                finish();
+
             }
         });
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, test.class));
-                finish();
             }
         });
     }
@@ -63,12 +89,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser user = auth.getCurrentUser();
-        userid= user.getUid();
+//        userid= user.getUid();
         if (user == null) {
             startActivity(new Intent(MainActivity.this, login.class));
             finish();
         }
-        IdShow.setText(userid);
+//        IdShow.setText(userid);
     }
 
 

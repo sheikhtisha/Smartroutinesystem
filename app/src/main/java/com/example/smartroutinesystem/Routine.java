@@ -10,6 +10,7 @@ public class Routine {
     private String course;
     private String room;
 
+
     public Routine() {
         // Default constructor required for Firebase
     }

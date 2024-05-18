@@ -1,6 +1,9 @@
 package com.example.smartroutinesystem;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -104,6 +107,28 @@ public class UpdateProfile extends AppCompatActivity {
         } else {
             // User is not authenticated
             Toast.makeText(UpdateProfile.this, "User not authenticated", Toast.LENGTH_SHORT).show();
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_logout:
+                mAuth.signOut();
+                startActivity(new Intent(getApplicationContext(), login.class));
+                finish();
+                return true;
+            case R.id.menu_profile:
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                return true;
+            // Add more cases for other options like settings profile, etc.
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

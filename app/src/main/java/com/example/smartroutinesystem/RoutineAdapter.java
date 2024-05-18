@@ -32,6 +32,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineHolder> {
         holder.roomView.setText(items.get(position).getRoom());
         holder.courseView.setText(items.get(position).getCourse());
         holder.teacherView.setText(items.get(position).getName());
+        holder.timeView.setText(items.get(position).getTime());
     }
 
     @Override

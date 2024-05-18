@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,8 +26,7 @@ import java.util.List;
 
 public class Home extends AppCompatActivity {
 
-    private TextView textView1,textView2,textView3,textView4;
-    private RecyclerView recyclerView;
+    private TextView textView1,textView2;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseRef, rDatabaseRef;
 
@@ -47,8 +48,7 @@ public class Home extends AppCompatActivity {
         // Initialize views
         textView1 = findViewById(R.id.tv1);
         textView2=findViewById(R.id.tv2);
-        textView3=findViewById(R.id.tv3);
-        textView4=findViewById(R.id.tv4);
+
         // Get the current day of the week
         Calendar calendar = Calendar.getInstance();
         int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -60,6 +60,7 @@ public class Home extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("users").child(uId);
         rDatabaseRef = FirebaseDatabase.getInstance().getReference("routine");
 
+        textView1.setText("Today is "+currentDay);
         // Query user data
         mDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -69,13 +70,11 @@ public class Home extends AppCompatActivity {
                     depart = snapshot.child("department").getValue(String.class);
                     seri = snapshot.child("series").getValue(String.class);
                     sec = snapshot.child("section").getValue(String.class);
-                    textView2.setText(depart);
-                    textView3.setText(seri);
-                    textView4.setText(sec);
+                    textView2.setText("Routine for "+depart+" "+ seri+" section "+sec);
+
                     rDatabaseRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            StringBuilder teachers = new StringBuilder();
                             List<ViewData> items = new ArrayList<ViewData>();
                             for (DataSnapshot routineSnapshot : dataSnapshot.getChildren()) {
                                 String batch = routineSnapshot.child("batch").getValue(String.class);
@@ -89,7 +88,7 @@ public class Home extends AppCompatActivity {
 
                                 // Check if this routine entry meets your criteria
                                 if (dept.equals(depart) && batch.equals(seri) && section.equals(sec) && day.equals(currentDay)) {
-                                    items.add(new ViewData(teacher, course, room));
+                                    items.add(new ViewData(teacher, course, room,time));
                                 }
                             }
                             if (items.isEmpty())
@@ -140,4 +139,28 @@ public class Home extends AppCompatActivity {
                 return "Unknown";
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_logout:
+                mAuth.signOut();
+                startActivity(new Intent(getApplicationContext(), login.class));
+                finish();
+                return true;
+            case R.id.menu_profile:
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                return true;
+            // Add more cases for other options like settings profile, etc.
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 }

@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RoutineHolder extends RecyclerView.ViewHolder {
 
-    TextView teacherView, courseView, roomView;
+    TextView teacherView, courseView, roomView,timeView;
     public RoutineHolder(@NonNull View itemView) {
         super(itemView);
         teacherView=itemView.findViewById(R.id.textViewName);
         courseView=itemView.findViewById(R.id.textViewCourse);
         roomView=itemView.findViewById(R.id.textViewRoom);
+        timeView=itemView.findViewById(R.id.textViewTime);
     }
 }

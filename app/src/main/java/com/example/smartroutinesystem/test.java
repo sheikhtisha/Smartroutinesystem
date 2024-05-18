@@ -50,8 +50,8 @@ public class test extends AppCompatActivity {
                     String time = routineSnapshot.child("time").getValue(String.class);
 
                     // Check if this routine entry meets your criteria
-                    if (dept.equals("CSE") && batch.equals("19") && section.equals("A") && day.equals("Saturday")) {
-                        items.add(new ViewData(teacher,course,room));
+                    if (dept.equals("CSE") && batch.equals("19") && section.equals("A") && day.equals("Sunday")) {
+                        items.add(new ViewData(teacher,course,room,time));
                     }
                 }
                 RecyclerView recyclerView=findViewById(R.id.testView);

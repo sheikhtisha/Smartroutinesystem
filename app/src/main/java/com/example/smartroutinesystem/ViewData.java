@@ -5,11 +5,21 @@ public class ViewData {
     private String name;
     private String course;
     private String room;
+    private String time;
 
-    public ViewData(String name, String course, String room) {
+    public ViewData(String name, String course, String room, String time) {
         this.name = name;
         this.course = course;
         this.room = room;
+        this.time=time;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getName() {

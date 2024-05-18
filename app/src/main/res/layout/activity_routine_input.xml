@@ -6,40 +6,41 @@
     android:padding="16dp"
     tools:context=".RoutineInputActivity">
 
-    <!-- Department Spinner -->
-    <Spinner
-        android:id="@+id/deptSpinner"
+    <!-- Department TextView -->
+    <TextView
+        android:id="@+id/deptTextView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Select Department"
-        android:textSize="16sp" />
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="15dp"/>
 
-    <!-- Batch Spinner -->
-    <Spinner
-        android:id="@+id/batchSpinner"
+    <!-- Batch TextView -->
+    <TextView
+        android:id="@+id/batchTextView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/deptSpinner"
-        android:layout_marginTop="8dp"
-        android:hint="Select Batch"
-        android:textSize="16sp" />
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/deptTextView"
+        android:layout_marginBottom="15dp"/>
 
-    <!-- Section Spinner -->
-    <Spinner
-        android:id="@+id/sectionSpinner"
+    <!-- Section TextView -->
+    <TextView
+        android:id="@+id/sectionTextView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/batchSpinner"
-        android:layout_marginTop="8dp"
-        android:hint="Select Section"
-        android:textSize="16sp" />
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/batchTextView"
+        android:layout_marginBottom="15dp"/>
 
     <!-- Day Spinner -->
     <Spinner
         android:id="@+id/daySpinner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/sectionSpinner"
+        android:layout_below="@id/sectionTextView"
         android:layout_marginTop="8dp"
         android:hint="Select Day"
         android:textSize="16sp" />
@@ -92,6 +93,11 @@
         android:layout_below="@id/roomEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Save" />
+        android:text="Save"
+        android:background="@drawable/button_background"
+        android:textColor="@color/button_text"
+        android:padding="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:elevation="8dp"/>
 
 </RelativeLayout>
