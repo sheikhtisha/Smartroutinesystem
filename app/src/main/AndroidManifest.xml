@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="34">
         <activity
+            android:name=".AdminHomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".test"
             android:exported="false" />
         <activity
