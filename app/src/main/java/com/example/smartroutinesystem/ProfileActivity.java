@@ -74,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
                         textView2.setText("Department: " + department);
                         textView3.setText("Roll Number: " + rollNumber);
                         textView4.setText("Series: " + series);
-                        textView5.setText("Section"+section);
+                        textView5.setText("Section: "+section);
                     } else {
                         // Current user not found in the database
                         textView1.setText("User data not found");

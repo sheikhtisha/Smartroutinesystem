@@ -25,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+
 public class RoutineInputActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
@@ -114,17 +116,17 @@ public class RoutineInputActivity extends AppCompatActivity {
         String teacher = teacherEditText.getText().toString();
         String course = courseEditText.getText().toString();
         String room = roomEditText.getText().toString();
-
+        String timeField= timeChild(time);
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference routineRef = databaseRef.child("routine");
-        String routineId = routineRef.push().getKey();
+        DatabaseReference routineRef = databaseRef.child("routine").child(dept).child(series).child(section);
+//        String routineId = routineRef.push().getKey();
 
-        Routine routine = new Routine(dept, series, section, day, time, teacher, course, room);
+        Routine routine = new Routine( teacher, course, room);
+        ViewData data= new ViewData(teacher,course,room,time);
 
-        if (routineId != null) {
-            routineRef.child(routineId).setValue(routine);
+            routineRef.child(day).child(timeField).setValue(data);
             Toast.makeText(RoutineInputActivity.this, "Routine saved", Toast.LENGTH_SHORT).show();
-        }
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -146,6 +148,30 @@ public class RoutineInputActivity extends AppCompatActivity {
             // Add more cases for other options like settings profile, etc.
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+    private String timeChild( String time) {
+        switch (time) {
+            case "8.00 AM":
+                return "800";
+            case "8.50 AM":
+                return "850";
+            case "9.40 AM":
+                return "940";
+            case "10.50 AM":
+                return "1050";
+            case "11.40 AM":
+                return "1140";
+            case "12.30 PM":
+                return "1230";
+            case "2.30 PM":
+                return "1430";
+            case "3.20 PM":
+                return "1520";
+            case "4.10 PM":
+                return "1610";
+            default:
+                return "Unknown";
         }
     }
 }

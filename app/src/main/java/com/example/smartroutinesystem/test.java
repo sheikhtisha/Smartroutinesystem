@@ -6,9 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,51 +26,37 @@ import java.util.List;
 
 public class test extends AppCompatActivity {
     FirebaseAuth mAuth;
-    DatabaseReference rDatabase;
+    DatabaseReference rDatabase, mDatabase;
     TextView textView;
-
+    EditText TeacherEdit,CourseEdit,RoomEdit;
+    Button set;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        mDatabase= FirebaseDatabase.getInstance().getReference("users");
         rDatabase = FirebaseDatabase.getInstance().getReference("routine");
         textView = findViewById(R.id.textView1);
-
-
-        // Fetch all routine entries
-        rDatabase.addValueEventListener(new ValueEventListener() {
+        TeacherEdit=findViewById(R.id.TeacherEditView);
+        CourseEdit=findViewById(R.id.ClassEditView);
+        RoomEdit=findViewById(R.id.RoomEditText);
+        set= findViewById(R.id.btn_ok);
+        mAuth=FirebaseAuth.getInstance();
+        set.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                StringBuilder teachers = new StringBuilder();
-                List<ViewData>items=new ArrayList<ViewData>();
-                for (DataSnapshot routineSnapshot : dataSnapshot.getChildren()) {
-                    String batch = routineSnapshot.child("batch").getValue(String.class);
-                    String course = routineSnapshot.child("course").getValue(String.class);
-                    String day = routineSnapshot.child("day").getValue(String.class);
-                    String dept = routineSnapshot.child("dept").getValue(String.class);
-                    String room = routineSnapshot.child("room").getValue(String.class);
-                    String section = routineSnapshot.child("section").getValue(String.class);
-                    String teacher = routineSnapshot.child("teacher").getValue(String.class);
-                    String time = routineSnapshot.child("time").getValue(String.class);
-
-                    // Check if this routine entry meets your criteria
-                    if (dept.equals("CSE") && batch.equals("19") && section.equals("A") && day.equals("Sunday")) {
-                        items.add(new ViewData(teacher,course,room,time));
-                    }
-                }
-                RecyclerView recyclerView=findViewById(R.id.testView);
-
-                recyclerView.setLayoutManager(new LinearLayoutManager(test.this));
-                recyclerView.setAdapter(new RoutineAdapter(getApplicationContext(),items));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors
+            public void onClick(View v) {
+                String teacher=TeacherEdit.getText().toString();
+                String course= CourseEdit.getText().toString();
+                String Room= RoomEdit.getText().toString();
+                ViewData data= new ViewData(teacher,course,Room,"8 a.m.");
+                rDatabase.child("CSE").child("19").child("A").child("Saturday").setValue(data);
+                Toast.makeText(getApplicationContext(),"Routine saved", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
+
 }
 
 

@@ -13,11 +13,47 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:text="TextView" />
-
+    <EditText
+        android:id="@+id/TeacherEditView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:hint="Teacher's name"
+        android:layout_below="@+id/textView1"
+        android:textSize="16sp"
+    />
+    <EditText
+        android:id="@+id/ClassEditView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Course name"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/TeacherEditView"
+        />
+    <EditText
+        android:id="@+id/RoomEditText"
+        android:hint="Room"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/ClassEditView"
+        />
+    <Button
+        android:id="@+id/btn_ok"
+        android:text="SET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="16dp"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_below="@id/RoomEditText"
+        app:layout_constraintEnd_toEndOf="parent"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView1"
+        android:layout_below="@id/btn_ok"
         android:id="@+id/testView"
         />
 

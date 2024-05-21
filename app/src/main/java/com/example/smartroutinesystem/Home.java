@@ -72,24 +72,21 @@ public class Home extends AppCompatActivity {
                     sec = snapshot.child("section").getValue(String.class);
                     textView2.setText("Routine for "+depart+" "+ seri+" section "+sec);
 
+                    rDatabaseRef = FirebaseDatabase.getInstance().getReference("routine").child(depart).child(seri).child(sec).child(currentDay);
+
                     rDatabaseRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             List<ViewData> items = new ArrayList<ViewData>();
                             for (DataSnapshot routineSnapshot : dataSnapshot.getChildren()) {
-                                String batch = routineSnapshot.child("batch").getValue(String.class);
-                                String course = routineSnapshot.child("course").getValue(String.class);
-                                String day = routineSnapshot.child("day").getValue(String.class);
-                                String dept = routineSnapshot.child("dept").getValue(String.class);
-                                String room = routineSnapshot.child("room").getValue(String.class);
-                                String section = routineSnapshot.child("section").getValue(String.class);
-                                String teacher = routineSnapshot.child("teacher").getValue(String.class);
-                                String time = routineSnapshot.child("time").getValue(String.class);
+                               if (routineSnapshot.exists()){
+                                   String course = routineSnapshot.child("course").getValue(String.class);
+                                    String room = routineSnapshot.child("room").getValue(String.class);
+                                    String teacher = routineSnapshot.child("name").getValue(String.class);
+                                    String time = routineSnapshot.child("time").getValue(String.class);
 
-                                // Check if this routine entry meets your criteria
-                                if (dept.equals(depart) && batch.equals(seri) && section.equals(sec) && day.equals(currentDay)) {
-                                    items.add(new ViewData(teacher, course, room,time));
-                                }
+                                    // Check if this routine entry meets your criteria
+                                    items.add(new ViewData(teacher, course, room,time));}
                             }
                             if (items.isEmpty())
                             {
