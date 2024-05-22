@@ -116,7 +116,7 @@ public class MakeCrActivity extends AppCompatActivity {
             databaseReference.child(uid).child("cr").setValue("Yes")
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(MakeCrActivity.this, "Student made CR successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MakeCrActivity.this, "Student made CR successfully", Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(MakeCrActivity.this, "Failed to make student CR", Toast.LENGTH_SHORT).show();
                         }
