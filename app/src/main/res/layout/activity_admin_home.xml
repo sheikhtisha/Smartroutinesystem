@@ -1,9 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".AdminHomeActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Welcome Admin"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/black"
+        android:fontFamily="sans-serif-medium"
+        />
+    <Button
+        android:id="@+id/btn_make_cr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcomeText"
+        android:layout_marginTop="20dp"
+        android:text="Make CR" />
+
+    <Button
+        android:id="@+id/btn_remove_cr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remove CR"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/btn_make_cr"/>
+
+    <Button
+        android:id="@+id/btn_see_all_cr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="See All CR"
+        android:layout_below="@id/btn_remove_cr"
+        android:layout_marginTop="16dp" />
+
+</RelativeLayout>

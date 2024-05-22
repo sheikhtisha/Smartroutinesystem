@@ -101,6 +101,7 @@ public class register extends AppCompatActivity {
                 String department = departmentSpinner.getSelectedItem().toString();
                 String section = sectionSpinner.getSelectedItem().toString();
                 String cr="NO";
+                String admin="NO";
 
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(fullName) || TextUtils.isEmpty(phoneNumber) || TextUtils.isEmpty(rollNumber) || TextUtils.isEmpty(series)) {
                     Toast.makeText(register.this, "All fields are required", Toast.LENGTH_SHORT).show();
@@ -117,7 +118,7 @@ public class register extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     String userId = user.getUid();
                                     // Create a user object with all the details
-                                    User userData = new User(email, password, fullName, phoneNumber, rollNumber, series, department,section,cr);
+                                    User userData = new User(email, password, fullName, phoneNumber, rollNumber, series, department,section,cr,admin);
 
                                     // Save the user data to Firebase Realtime Database
                                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");

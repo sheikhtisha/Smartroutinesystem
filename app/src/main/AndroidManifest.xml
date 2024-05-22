@@ -14,6 +14,15 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="34">
         <activity
+            android:name=".SeeAllCrActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RemoveCrActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MakeCrActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminHomeActivity"
             android:exported="false" />
         <activity

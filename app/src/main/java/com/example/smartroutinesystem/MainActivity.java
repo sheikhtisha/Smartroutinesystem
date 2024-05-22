@@ -48,6 +48,13 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     String name= snapshot.child("fullName").getValue(String.class);
+                    String admin=snapshot.child("admin").getValue(String.class);
+                    if (admin.equals("Yes"))
+                    {
+                        Intent i=new Intent(getApplicationContext(), AdminHomeActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
                     welcome.setText("Welcome "+name);
                 }
                 else {
@@ -88,12 +95,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser user = auth.getCurrentUser();
-//        userid= user.getUid();
         if (user == null) {
             startActivity(new Intent(MainActivity.this, login.class));
             finish();
         }
-//        IdShow.setText(userid);
+        else {
+            String Uid= user.getUid();
+
+            reference=FirebaseDatabase.getInstance().getReference("users");
+            reference.child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String admin = snapshot.child("admin").getValue(String.class);
+                        if (admin.equals("Yes")) {
+                            Intent i = new Intent(getApplicationContext(), AdminHomeActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+                    }
+
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            }
     }
 
 
