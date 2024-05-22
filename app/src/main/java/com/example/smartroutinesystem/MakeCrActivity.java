@@ -25,6 +25,7 @@ public class MakeCrActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     String uid;
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class MakeCrActivity extends AppCompatActivity {
                         String roll=userSnapshot.child("rollNumber").getValue().toString();
                         if (roll.equals(rollNo))
                         {
+                            count=1;
                             uid= userSnapshot.getKey();
                             String fullName = userSnapshot.child("fullName").getValue(String.class);
                             String department = userSnapshot.child("department").getValue(String.class);
@@ -89,12 +91,12 @@ public class MakeCrActivity extends AppCompatActivity {
                             textView4.setText("Series: " + series);
                             textView5.setText("Section: "+section);
                             textViewStudentData.setText("CR: "+ cr);
+                            buttonMakeCR.setVisibility(View.VISIBLE);
                         }
-
-                        buttonMakeCR.setVisibility(View.VISIBLE);
                     }
-                    else {
-                        textViewStudentData.setText("Student not found");
+                    if (count==0)
+                    {
+                        textView1.setText("Student not found");
                         buttonMakeCR.setVisibility(View.GONE);
                     }
 
