@@ -17,7 +17,7 @@ public class AdminHomeActivity extends AppCompatActivity {
     FirebaseAuth auth;
     private Button btnMakeCr;
     private Button btnRemoveCr;
-    private Button btnSeeAllCr;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class AdminHomeActivity extends AppCompatActivity {
 
         btnMakeCr = findViewById(R.id.btn_make_cr);
         btnRemoveCr = findViewById(R.id.btn_remove_cr);
-        btnSeeAllCr = findViewById(R.id.btn_see_all_cr);
+
 
         btnMakeCr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,13 +53,7 @@ public class AdminHomeActivity extends AppCompatActivity {
             }
         });
 
-        btnSeeAllCr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle See All CR button click
-                startActivity(new Intent(AdminHomeActivity.this, SeeAllCrActivity.class));
-            }
-        });
+
     }
 
 

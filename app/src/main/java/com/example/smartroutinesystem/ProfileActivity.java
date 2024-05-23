@@ -99,19 +99,23 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_profile:
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                return true;
+            case R.id.menu_change_password:
+                startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                return true;
             case R.id.menu_logout:
                 mAuth.signOut();
                 startActivity(new Intent(getApplicationContext(), login.class));
                 finish();
                 return true;
-            case R.id.menu_profile:
-                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                return true;
-            // Add more cases for other options like settings profile, etc.
+            // Add more cases for other options like settings, etc.
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }

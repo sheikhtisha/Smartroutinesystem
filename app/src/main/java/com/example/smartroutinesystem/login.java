@@ -24,13 +24,13 @@ public class login extends AppCompatActivity {
     Button buttonlogin;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
-    TextView textView;
+    TextView textViewRegisterNow, textViewForgotPassword;
 
     @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
@@ -47,15 +47,22 @@ public class login extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password);
         buttonlogin = findViewById(R.id.btn_login);
         progressBar = findViewById(R.id.progressBar);
-        textView = findViewById(R.id.registerNow);
-        textView.setOnClickListener(new View.OnClickListener() {
+        textViewRegisterNow = findViewById(R.id.registerNow);
+        textViewForgotPassword = findViewById(R.id.forgot_password);
+
+        textViewRegisterNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), register.class);
                 startActivity(intent);
-                finish();
             }
+        });
 
+        textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onForgotPasswordClicked();
+            }
         });
 
         buttonlogin.setOnClickListener(new View.OnClickListener() {
@@ -66,14 +73,17 @@ public class login extends AppCompatActivity {
                 email = String.valueOf(editTextEmail.getText());
                 password = String.valueOf(editTextPassword.getText());
 
-                if (TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     Toast.makeText(login.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
-                if (TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     Toast.makeText(login.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
+
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -84,16 +94,32 @@ public class login extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                     finish();
-
                                 } else {
-                                    Toast.makeText(login.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(login.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-
-
             }
         });
+    }
+
+    public void onForgotPasswordClicked() {
+        String email = editTextEmail.getText().toString().trim();
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(login.this, "Enter your registered email", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(login.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(login.this, "Failed to send reset email", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

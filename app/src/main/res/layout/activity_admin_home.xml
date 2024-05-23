@@ -34,12 +34,4 @@
         android:layout_marginTop="16dp"
         android:layout_below="@id/btn_make_cr"/>
 
-    <Button
-        android:id="@+id/btn_see_all_cr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="See All CR"
-        android:layout_below="@id/btn_remove_cr"
-        android:layout_marginTop="16dp" />
-
 </RelativeLayout>

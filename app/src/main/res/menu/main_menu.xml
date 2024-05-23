@@ -4,6 +4,9 @@
         android:id="@+id/menu_profile"
         android:title="Profile" />
     <item
+        android:id="@+id/menu_change_password"
+        android:title="Change Password" />
+    <item
         android:id="@+id/menu_logout"
         android:title="Logout" />
 

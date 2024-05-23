@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="34">
         <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".SeeAllCrActivity"
             android:exported="false" />
         <activity

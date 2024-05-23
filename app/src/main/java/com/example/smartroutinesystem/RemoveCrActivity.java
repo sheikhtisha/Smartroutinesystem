@@ -5,13 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +29,7 @@ import java.util.List;
 
 public class RemoveCrActivity extends AppCompatActivity {
 
+    FirebaseAuth mAuth;
     private Spinner deptSpinner, seriesSpinner, sectionSpinner;
     private Button searchCrButton;
     private RecyclerView crRecyclerView;
@@ -37,6 +43,7 @@ public class RemoveCrActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_cr);
 
+        mAuth = FirebaseAuth.getInstance();
         deptSpinner = findViewById(R.id.deptSpinner);
         seriesSpinner = findViewById(R.id.seriesSpinner);
         sectionSpinner = findViewById(R.id.sectionSpinner);
@@ -44,6 +51,25 @@ public class RemoveCrActivity extends AppCompatActivity {
         crRecyclerView = findViewById(R.id.crRecyclerView);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        FirebaseUser user = mAuth.getCurrentUser();
+        String Uid = user.getUid();
+        databaseReference.child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String name = snapshot.child("fullName").getValue(String.class);
+                    String admin = snapshot.child("admin").getValue(String.class);
+                    if (admin != null && admin.equals("No")) {
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+            }
+        });
 
         setupSpinners();
         setupRecyclerView();
@@ -116,5 +142,30 @@ public class RemoveCrActivity extends AppCompatActivity {
                 Toast.makeText(RemoveCrActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_profile:
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                return true;
+            case R.id.menu_change_password:
+                startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                return true;
+            case R.id.menu_logout:
+                mAuth.signOut();
+                startActivity(new Intent(getApplicationContext(), login.class));
+                finish();
+                return true;
+            // Add more cases for other options like settings, etc.
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

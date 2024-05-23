@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,8 +20,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.mindrot.jbcrypt.BCrypt;
 
 public class register extends AppCompatActivity {
     EditText editTextEmail, editTextPassword, editTextFullName, editTextPhoneNumber, editTextRollNumber, editTextSeries;
@@ -55,7 +59,7 @@ public class register extends AppCompatActivity {
         editTextRollNumber = findViewById(R.id.rollNumber);
         editTextSeries = findViewById(R.id.series);
         departmentSpinner = findViewById(R.id.departmentSpinner);
-        sectionSpinner= findViewById(R.id.sectionSpinner);
+        sectionSpinner = findViewById(R.id.sectionSpinner);
         buttonReg = findViewById(R.id.btn_register);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
@@ -100,8 +104,8 @@ public class register extends AppCompatActivity {
                 String series = editTextSeries.getText().toString().trim();
                 String department = departmentSpinner.getSelectedItem().toString();
                 String section = sectionSpinner.getSelectedItem().toString();
-                String cr="NO";
-                String admin="NO";
+                String cr = "NO";
+                String admin = "NO";
 
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(fullName) || TextUtils.isEmpty(phoneNumber) || TextUtils.isEmpty(rollNumber) || TextUtils.isEmpty(series)) {
                     Toast.makeText(register.this, "All fields are required", Toast.LENGTH_SHORT).show();
@@ -109,30 +113,50 @@ public class register extends AppCompatActivity {
                     return;
                 }
 
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressBar.setVisibility(View.GONE);
-                                if (task.isSuccessful()) {
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    String userId = user.getUid();
-                                    // Create a user object with all the details
-                                    User userData = new User(email, password, fullName, phoneNumber, rollNumber, series, department,section,cr,admin);
+                // Check if a user with the same roll number already exists
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+                databaseReference.orderByChild("rollNumber").equalTo(rollNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            Toast.makeText(register.this, "User with this roll number already exists", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                        } else {
+                            // Hash the password
+                            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-                                    // Save the user data to Firebase Realtime Database
-                                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
-                                    databaseReference.child(userId).setValue(userData);
+                            mAuth.createUserWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            progressBar.setVisibility(View.GONE);
+                                            if (task.isSuccessful()) {
+                                                FirebaseUser user = mAuth.getCurrentUser();
+                                                String userId = user.getUid();
+                                                // Create a user object with all the details
+                                                User userData = new User(email, hashedPassword, fullName, phoneNumber, rollNumber, series, department, section, cr, admin);
 
-                                    Toast.makeText(register.this, "Account created successfully", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), login.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Toast.makeText(register.this, "Registration failed", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                                                // Save the user data to Firebase Realtime Database
+                                                databaseReference.child(userId).setValue(userData);
+
+                                                Toast.makeText(register.this, "Account created successfully", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(getApplicationContext(), login.class);
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                Toast.makeText(register.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(register.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
             }
         });
     }

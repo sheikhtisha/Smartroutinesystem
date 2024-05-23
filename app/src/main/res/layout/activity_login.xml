@@ -7,7 +7,7 @@
     android:padding="15dp"
     android:layout_height="match_parent"
     tools:context=".login">
-    
+
     <TextView
         android:text="@string/login"
         android:textSize="25sp"
@@ -25,7 +25,6 @@
             android:hint="@string/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -36,10 +35,23 @@
             android:id="@+id/password"
             android:hint="@string/password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:inputType="textPassword">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/forgot_password"
+        android:text="Forgot Password"
+        android:textSize="16sp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="onForgotPasswordClicked"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
