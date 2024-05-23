@@ -2,32 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="15dp"
-    android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".register">
 
     <TextView
         android:text="@string/register"
         android:textSize="25sp"
-        android:textStyle="bold"
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        style="@style/TextViewStyle" />
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
             android:hint="@string/email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
@@ -35,38 +38,53 @@
             android:hint="@string/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/confirmPassword"
+            android:hint="Confirm Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Additional fields -->
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fullName"
             android:hint="Full Name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/phoneNumber"
             android:hint="Phone Number"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/rollNumber"
             android:hint="Roll Number"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Add a title "Department" before the spinner -->
@@ -84,10 +102,11 @@
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="8dp"/>
+            android:layout_marginEnd="8dp" />
 
         <Spinner
             android:id="@+id/departmentSpinner"
+            style="@style/SpinnerStyle"
             android:layout_width="261dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -95,16 +114,17 @@
             android:background="@android:color/transparent" />
     </LinearLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/series"
             android:hint="Series"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -119,10 +139,11 @@
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="8dp"/>
+            android:layout_marginEnd="8dp" />
 
         <Spinner
             android:id="@+id/sectionSpinner"
+            style="@style/SpinnerStyle"
             android:layout_width="261dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -130,7 +151,6 @@
             android:background="@android:color/transparent" />
     </LinearLayout>
     <!-- End of additional fields -->
-
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -141,6 +161,7 @@
     <Button
         android:id="@+id/btn_register"
         android:text="@string/register"
+        style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -153,5 +174,4 @@
         android:text="@string/click_to_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
 </LinearLayout>

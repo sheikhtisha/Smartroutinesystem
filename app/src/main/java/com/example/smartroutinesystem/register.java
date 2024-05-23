@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class register extends AppCompatActivity {
-    EditText editTextEmail, editTextPassword, editTextFullName, editTextPhoneNumber, editTextRollNumber, editTextSeries;
+    EditText editTextEmail, editTextPassword, editTextConfirmPassword, editTextFullName, editTextPhoneNumber, editTextRollNumber, editTextSeries;
     Spinner departmentSpinner, sectionSpinner;
     Button buttonReg;
     FirebaseAuth mAuth;
@@ -54,6 +54,7 @@ public class register extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
+        editTextConfirmPassword = findViewById(R.id.confirmPassword);
         editTextFullName = findViewById(R.id.fullName);
         editTextPhoneNumber = findViewById(R.id.phoneNumber);
         editTextRollNumber = findViewById(R.id.rollNumber);
@@ -98,17 +99,46 @@ public class register extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 String email = editTextEmail.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
+                String confirmPassword = editTextConfirmPassword.getText().toString().trim();
                 String fullName = editTextFullName.getText().toString().trim();
                 String phoneNumber = editTextPhoneNumber.getText().toString().trim();
                 String rollNumber = editTextRollNumber.getText().toString().trim();
                 String series = editTextSeries.getText().toString().trim();
                 String department = departmentSpinner.getSelectedItem().toString();
-                String section = sectionSpinner.getSelectedItem().toString();
+                String selectedSection = sectionSpinner.getSelectedItem().toString();
                 String cr = "NO";
                 String admin = "NO";
 
-                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(fullName) || TextUtils.isEmpty(phoneNumber) || TextUtils.isEmpty(rollNumber) || TextUtils.isEmpty(series)) {
+                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmPassword) || TextUtils.isEmpty(fullName) || TextUtils.isEmpty(phoneNumber) || TextUtils.isEmpty(rollNumber) || TextUtils.isEmpty(series)) {
                     Toast.makeText(register.this, "All fields are required", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
+
+                if (!password.equals(confirmPassword)) {
+                    Toast.makeText(register.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
+
+                // Determine the section based on the last three digits of the roll number
+                int lastThreeDigits = Integer.parseInt(rollNumber.substring(rollNumber.length() - 3));
+                String determinedSection;
+                if (lastThreeDigits >= 1 && lastThreeDigits <= 60) {
+                    determinedSection = "A";
+                } else if (lastThreeDigits >= 61 && lastThreeDigits <= 120) {
+                    determinedSection = "B";
+                } else if (lastThreeDigits >= 121 && lastThreeDigits <= 181) {
+                    determinedSection = "C";
+                } else {
+                    Toast.makeText(register.this, "Invalid roll number", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
+
+                // Check if the selected section matches the determined section
+                if (!selectedSection.equals(determinedSection)) {
+                    Toast.makeText(register.this, "Selected section does not match the roll number", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
@@ -134,7 +164,7 @@ public class register extends AppCompatActivity {
                                                 FirebaseUser user = mAuth.getCurrentUser();
                                                 String userId = user.getUid();
                                                 // Create a user object with all the details
-                                                User userData = new User(email, hashedPassword, fullName, phoneNumber, rollNumber, series, department, section, cr, admin);
+                                                User userData = new User(email, fullName, phoneNumber, rollNumber, series, department, selectedSection, cr, admin);
 
                                                 // Save the user data to Firebase Realtime Database
                                                 databaseReference.child(userId).setValue(userData);

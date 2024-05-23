@@ -16,9 +16,7 @@
         <activity
             android:name=".ChangePasswordActivity"
             android:exported="false" />
-        <activity
-            android:name=".SeeAllCrActivity"
-            android:exported="false" />
+
         <activity
             android:name=".RemoveCrActivity"
             android:exported="false" />
@@ -39,9 +37,6 @@
             android:exported="false" />
         <activity
             android:name=".Home"
-            android:exported="false" />
-        <activity
-            android:name=".home"
             android:exported="false" />
         <activity
             android:name=".RoutineInputActivity"

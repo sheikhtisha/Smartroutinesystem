@@ -21,7 +21,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class ProfileActivity extends AppCompatActivity {
-    TextView textView1, textView2, textView3, textView4,textView5;
+    TextView textView1, textView2, textView3, textView4,textView5,textView6;
     FirebaseAuth mAuth;
     DatabaseReference mDatabaseRef;
     Button btn1;
@@ -43,6 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
         textView3 = findViewById(R.id.tv3);
         textView4 = findViewById(R.id.tv4);
         textView5=findViewById(R.id.tv5);
+        textView6=findViewById(R.id.tv6);
         btn1= findViewById(R.id.btn_change);
 
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -68,13 +69,15 @@ public class ProfileActivity extends AppCompatActivity {
                         String rollNumber = dataSnapshot.child("rollNumber").getValue(String.class);
                         String series = dataSnapshot.child("series").getValue(String.class);
                         String section=dataSnapshot.child("section").getValue(String.class);
+                        String phone= dataSnapshot.child("phoneNumber").getValue(String.class);
 
                         // Display the retrieved data
                         textView1.setText("Name: " + fullName);
                         textView2.setText("Department: " + department);
                         textView3.setText("Roll Number: " + rollNumber);
-                        textView4.setText("Series: " + series);
-                        textView5.setText("Section: "+section);
+                        textView4.setText("Phone Number: "+ phone);
+                        textView5.setText("Series: " + series);
+                        textView6.setText("Section: "+section);
                     } else {
                         // Current user not found in the database
                         textView1.setText("User data not found");

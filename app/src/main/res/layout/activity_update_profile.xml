@@ -2,65 +2,124 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#f5f5f5">
 
     <!-- Title for Full Name EditText -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Full Name"/>
+        android:text="Full Name"
+        android:textSize="18sp"
+        android:textColor="#333"
+        android:layout_marginTop="8dp"/>
 
     <!-- EditText for Full Name -->
     <EditText
         android:id="@+id/editTextFullName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter your full name"/>
+        android:hint="Enter your full name"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
 
     <!-- Title for Department EditText -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Department"/>
+        android:text="Department"
+        android:textSize="18sp"
+        android:textColor="#333"
+        android:layout_marginTop="8dp"/>
 
     <!-- EditText for Department -->
     <EditText
         android:id="@+id/editTextDepartment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter your department"/>
+        android:hint="Enter your department"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
 
     <!-- Title for Roll Number EditText -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Roll Number"/>
+        android:text="Roll Number"
+        android:textSize="18sp"
+        android:textColor="#333"
+        android:layout_marginTop="8dp"/>
 
     <!-- EditText for Roll Number -->
     <EditText
         android:id="@+id/editTextRollNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter your roll number"/>
+        android:hint="Enter your roll number"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
 
     <!-- Title for Series EditText -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Series"/>
+        android:text="Series"
+        android:textSize="18sp"
+        android:textColor="#333"
+        android:layout_marginTop="8dp"/>
 
     <!-- EditText for Series -->
     <EditText
         android:id="@+id/editTextSeries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter your series"/>
+        android:hint="Enter your series"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Title for Phone Number EditText -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone Number"
+        android:textSize="18sp"
+        android:textColor="#333"
+        android:layout_marginTop="8dp"/>
+
+    <!-- EditText for Phone Number -->
+    <EditText
+        android:id="@+id/editTextPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your phone number"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"/>
 
     <!-- Button to Update Profile -->
     <Button
         android:id="@+id/buttonUpdate"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
-        android:text="Update"/>
+        android:layout_marginTop="16dp"
+        android:text="Update"
+        android:backgroundTint="#6200EE"
+        android:textColor="#FFF"
+        android:padding="12dp"
+        android:textSize="18sp"/>
 </LinearLayout>

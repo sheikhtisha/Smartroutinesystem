@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UpdateProfile extends AppCompatActivity {
 
-    private EditText fullNameEditText, departmentEditText, rollNumberEditText, seriesEditText;
+    private EditText fullNameEditText, departmentEditText, rollNumberEditText, seriesEditText, phoneEditText;
     private Button updateButton;
 
     private FirebaseAuth mAuth;
@@ -42,6 +42,7 @@ public class UpdateProfile extends AppCompatActivity {
         departmentEditText = findViewById(R.id.editTextDepartment);
         rollNumberEditText = findViewById(R.id.editTextRollNumber);
         seriesEditText = findViewById(R.id.editTextSeries);
+        phoneEditText =findViewById(R.id.editTextPhoneNumber);
         updateButton = findViewById(R.id.buttonUpdate);
 
         // Fetch current user's data and populate EditText fields
@@ -67,12 +68,15 @@ public class UpdateProfile extends AppCompatActivity {
                         String department = dataSnapshot.child("department").getValue(String.class);
                         String rollNumber = dataSnapshot.child("rollNumber").getValue(String.class);
                         String series = dataSnapshot.child("series").getValue(String.class);
+                        String phone= dataSnapshot.child("phoneNumber").getValue(String.class);
 
                         // Set the retrieved values to EditText fields
                         fullNameEditText.setText(fullName);
                         departmentEditText.setText(department);
                         rollNumberEditText.setText(rollNumber);
                         seriesEditText.setText(series);
+                        phoneEditText.setText(phone);
+
                     }
                 }
 
@@ -86,7 +90,6 @@ public class UpdateProfile extends AppCompatActivity {
     }
 
     private void updateProfile() {
-
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             String userId = user.getUid();
@@ -95,20 +98,50 @@ public class UpdateProfile extends AppCompatActivity {
             String department = departmentEditText.getText().toString().trim();
             String rollNumber = rollNumberEditText.getText().toString().trim();
             String series = seriesEditText.getText().toString().trim();
+            String phone = phoneEditText.getText().toString().trim();
 
-            // Update user's profile in the RTDB
-            mDatabaseRef.child(userId).child("fullName").setValue(fullName);
-            mDatabaseRef.child(userId).child("department").setValue(department);
-            mDatabaseRef.child(userId).child("rollNumber").setValue(rollNumber);
-            mDatabaseRef.child(userId).child("series").setValue(series);
+            // Check if roll number already exists for another user
+            mDatabaseRef.orderByChild("rollNumber").equalTo(rollNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    boolean rollNumberExists = false;
 
-            // Show a toast message to indicate successful update
-            Toast.makeText(UpdateProfile.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        if (!snapshot.getKey().equals(userId)) {
+                            rollNumberExists = true;
+                            break;
+                        }
+                    }
+
+                    if (rollNumberExists) {
+                        // Roll number exists for another user
+                        Toast.makeText(UpdateProfile.this, "Roll number already exists for another user.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Roll number is unique or belongs to the current user
+                        // Update user's profile in the RTDB
+                        mDatabaseRef.child(userId).child("fullName").setValue(fullName);
+                        mDatabaseRef.child(userId).child("department").setValue(department);
+                        mDatabaseRef.child(userId).child("rollNumber").setValue(rollNumber);
+                        mDatabaseRef.child(userId).child("series").setValue(series);
+                        mDatabaseRef.child(userId).child("phoneNumber").setValue(phone);
+
+                        // Show a toast message to indicate successful update
+                        Toast.makeText(UpdateProfile.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle errors
+                    Toast.makeText(UpdateProfile.this, "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         } else {
             // User is not authenticated
             Toast.makeText(UpdateProfile.this, "User not authenticated", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);

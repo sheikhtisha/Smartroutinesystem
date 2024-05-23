@@ -2,7 +2,6 @@ package com.example.smartroutinesystem;
 
 public class User {
     private String email;
-    private String password;
     private String fullName;
     private String phoneNumber;
     private String rollNumber;
@@ -16,9 +15,8 @@ public class User {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String email, String password, String fullName, String phoneNumber, String rollNumber, String series, String department, String section, String cr, String admin) {
+    public User(String email, String fullName, String phoneNumber, String rollNumber, String series, String department, String section, String cr, String admin) {
         this.email = email;
-        this.password = password;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.rollNumber = rollNumber;
@@ -45,13 +43,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getFullName() {
         return fullName;
