@@ -14,9 +14,11 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="34">
         <activity
+            android:name=".ShowRoutineActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChangePasswordActivity"
             android:exported="false" />
-
         <activity
             android:name=".RemoveCrActivity"
             android:exported="false" />
@@ -44,7 +46,7 @@
         <activity
             android:name=".register"
             android:exported="false"
-            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".login"
             android:exported="true"

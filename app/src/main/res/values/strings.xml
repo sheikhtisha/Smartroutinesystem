@@ -56,4 +56,17 @@
         <item>B</item>
         <item>C</item>
     </string-array>
+    <string-array name="AllTimes">
+        <item>All Day</item>
+        <item>8.00 AM</item>
+        <item>8.50 AM</item>
+        <item>9.40 AM</item>
+        <item>10.50 AM</item>
+        <item>11.40 AM</item>
+        <item>12.30 PM</item>
+        <item>2.30 PM</item>
+        <item>3.20 PM</item>
+        <item>4.10 PM</item>
+    </string-array>
+
 </resources>
