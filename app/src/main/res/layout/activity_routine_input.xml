@@ -100,4 +100,33 @@
         android:fontFamily="sans-serif-medium"
         android:elevation="8dp"/>
 
+    <!-- Delete this class Button -->
+    <Button
+        android:id="@+id/deleteClassButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/saveButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Delete this class"
+        android:background="@drawable/button_background"
+        android:textColor="@color/button_text"
+        android:padding="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:elevation="8dp"/>
+
+    <!-- Delete full Routine Button -->
+    <Button
+        android:id="@+id/deleteRoutineButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/deleteClassButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Delete full Routine"
+        android:background="@drawable/button_background"
+        android:textColor="@color/button_text"
+        android:padding="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:elevation="8dp"/>
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.smartroutinesystem;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +33,7 @@ public class RoutineInputActivity extends AppCompatActivity {
     private Spinner daySpinner, timeSpinner;
     private EditText teacherEditText, courseEditText, roomEditText;
     private TextView deptView, batchView, sectionView;
-    private Button saveButton;
+    private Button saveButton, deleteClassButton, deleteRoutineButton;
     private String dept, series, section;
 
     @Override
@@ -49,6 +51,8 @@ public class RoutineInputActivity extends AppCompatActivity {
         courseEditText = findViewById(R.id.courseEditText);
         roomEditText = findViewById(R.id.roomEditText);
         saveButton = findViewById(R.id.saveButton);
+        deleteClassButton = findViewById(R.id.deleteClassButton);
+        deleteRoutineButton = findViewById(R.id.deleteRoutineButton);
 
         setupSpinners();
 
@@ -94,6 +98,20 @@ public class RoutineInputActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveRoutine();
+            }
+        });
+
+        deleteClassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               delClass();
+            }
+        });
+
+        deleteRoutineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delFullRoutine();
             }
         });
 
@@ -199,6 +217,47 @@ public class RoutineInputActivity extends AppCompatActivity {
         return !teacher.isEmpty() && !course.isEmpty() && !room.isEmpty();
     }
 
+    private void deleteClass() {
+        String day = (String) daySpinner.getSelectedItem();
+        String time = (String) timeSpinner.getSelectedItem();
+        String timeField = timeChild(time);
+
+        if (day == null || timeField.equals("Unknown")) {
+            Toast.makeText(this, "Please select a valid day and time", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        DatabaseReference classRef = FirebaseDatabase.getInstance().getReference("routine")
+                .child(dept).child(series).child(section).child(day).child(timeField);
+
+        classRef.removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(RoutineInputActivity.this, "Class deleted", Toast.LENGTH_SHORT).show();
+                teacherEditText.setText("");
+                courseEditText.setText("");
+                roomEditText.setText("");
+            } else {
+                Toast.makeText(RoutineInputActivity.this, "Failed to delete class", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void deleteFullRoutine() {
+        DatabaseReference routineRef = FirebaseDatabase.getInstance().getReference("routine")
+                .child(dept).child(series).child(section);
+
+        routineRef.removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(RoutineInputActivity.this, "Routine deleted", Toast.LENGTH_SHORT).show();
+                teacherEditText.setText("");
+                courseEditText.setText("");
+                roomEditText.setText("");
+            } else {
+                Toast.makeText(RoutineInputActivity.this, "Failed to delete routine", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -223,6 +282,30 @@ public class RoutineInputActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    private void delClass() {
+        new AlertDialog.Builder(RoutineInputActivity.this)
+                .setTitle("Remove this class")
+                .setMessage("Are you sure to remove this Class?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteClass();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+    private void delFullRoutine() {
+        new AlertDialog.Builder(RoutineInputActivity.this)
+                .setTitle("Remove Full Routine")
+                .setMessage("Are you sure to remove full routine for this semester?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteFullRoutine();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
 

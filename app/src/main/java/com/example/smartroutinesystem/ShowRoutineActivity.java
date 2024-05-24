@@ -7,12 +7,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,7 +40,8 @@ public class ShowRoutineActivity extends AppCompatActivity {
     GridView gridView;
     GridAdapter gridAdapter;
 
-    private String dept, series;
+    private String dept, series,sect;
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,7 @@ public class ShowRoutineActivity extends AppCompatActivity {
         // Initialize Button
         submitButton = findViewById(R.id.button);
 
-        setupSpinners();
+
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
@@ -76,8 +80,10 @@ public class ShowRoutineActivity extends AppCompatActivity {
                     if (dataSnapshot.exists()) {
                         dept = dataSnapshot.child("department").getValue(String.class);
                         series = dataSnapshot.child("series").getValue(String.class);
+                        sect = dataSnapshot.child("section").getValue(String.class);
                         String name=dataSnapshot.child("fullName").getValue(String.class);
-
+                        position=secSel(sect);
+                        sectionSpinner.setSelection(position);
                         welcomeTextView.setText("Welcome "+name);
                         deptTextView.setText("Department: "+dept);
                         seriesTextView.setText("Series: "+series);
@@ -100,6 +106,7 @@ public class ShowRoutineActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), login.class));
             finish();
         }
+        setupSpinners();
         setSpinnerListeners();
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +141,7 @@ public class ShowRoutineActivity extends AppCompatActivity {
         );
         secAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sectionSpinner.setAdapter(secAdapter);
+
     }
 
     private void setSpinnerListeners() {
@@ -147,7 +155,6 @@ public class ShowRoutineActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         };
-
         daySpinner.setOnItemSelectedListener(spinnerListener);
         timeSpinner.setOnItemSelectedListener(spinnerListener);
         sectionSpinner.setOnItemSelectedListener(spinnerListener);
@@ -197,19 +204,29 @@ public class ShowRoutineActivity extends AppCompatActivity {
             });
         } else {
             String timeField = timeChild(time);
+            List<ViewData> items = new ArrayList<ViewData>();
             rDatabaseRef.child(timeField).addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        ViewData viewData = dataSnapshot.getValue(ViewData.class);
-                        if (viewData != null) {
-                            List<ViewData> items = new ArrayList<>();
-                            items.add(viewData);
-                            gridView.setVisibility(View.VISIBLE);
-                            gridAdapter = new GridAdapter(getApplicationContext(), items);
-                            gridView.setAdapter(gridAdapter);
-                            noClass.setVisibility(View.GONE);
-                        }
+                public void onDataChange(@NonNull DataSnapshot routineSnapshot) {
+                    if (routineSnapshot.exists()) {
+                        String course = routineSnapshot.child("course").getValue(String.class);
+                        String room = routineSnapshot.child("room").getValue(String.class);
+                        String teacher = routineSnapshot.child("name").getValue(String.class);
+                        String time = routineSnapshot.child("time").getValue(String.class);
+
+                        // Check if this routine entry meets your criteria
+                        items.add(new ViewData(teacher, course, room, time));
+
+                    }
+                    if (items.isEmpty()) {
+                        noClass.setText("No class Now!!!");
+                        noClass.setVisibility(View.VISIBLE);
+                        gridView.setVisibility(View.GONE);
+                    } else {
+                        gridView.setVisibility(View.VISIBLE);
+                        gridAdapter = new GridAdapter(getApplicationContext(), items);
+                        gridView.setAdapter(gridAdapter);
+                        noClass.setVisibility(View.GONE);
                     }
                 }
 
@@ -244,6 +261,43 @@ public class ShowRoutineActivity extends AppCompatActivity {
                 return "1610";
             default:
                 return "Unknown";
+        }
+    }
+    private int secSel(String StrSection) {
+        switch(StrSection){
+            case "A":
+                return 0;
+            case "B":
+                return 1;
+            case "C":
+                return 2;
+            default:
+                return -1;
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_profile:
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                return true;
+            case R.id.menu_change_password:
+                startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                return true;
+            case R.id.menu_logout:
+                mAuth.signOut();
+                startActivity(new Intent(getApplicationContext(), login.class));
+                finish();
+                return true;
+            // Add more cases for other options like settings, etc.
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
