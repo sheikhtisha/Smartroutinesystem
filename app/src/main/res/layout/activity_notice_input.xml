@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#f5f5f5"
+    tools:context=".NoticeInputActivity">
+
+    <!-- Title for Notice Title EditText -->
+    <TextView
+        android:id="@+id/textViewNoticeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notice Title"
+        android:textSize="18sp"
+        android:textColor="#333"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <!-- Notice Title EditText -->
+    <EditText
+        android:id="@+id/editTextNoticeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter notice title"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toBottomOf="@id/textViewNoticeTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <!-- Title for Notice Body EditText -->
+    <TextView
+        android:id="@+id/textViewNoticeBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notice Body"
+        android:textSize="18sp"
+        android:textColor="#333"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/editTextNoticeTitle"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <!-- Notice Body EditText -->
+    <EditText
+        android:id="@+id/editTextNoticeBody"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:hint="Enter notice body"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:gravity="top"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/textViewNoticeBody"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/editTextNoticeBody"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
