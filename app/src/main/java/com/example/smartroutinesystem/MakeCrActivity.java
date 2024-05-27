@@ -25,15 +25,15 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MakeCrActivity extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     private EditText editTextRollNo;
     private Button buttonSearch;
     private TextView textViewStudentData, textView1, textView2, textView3, textView4, textView5;
     private Button buttonMakeCR;
 
     private DatabaseReference databaseReference;
-    String uid;
-    int count;
+    private String uid;
+    private int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,26 +52,32 @@ public class MakeCrActivity extends AppCompatActivity {
         textView5 = findViewById(R.id.tv5);
         buttonMakeCR = findViewById(R.id.buttonMakeCR);
 
+        // Initially hide the make CR button
+        buttonMakeCR.setVisibility(View.GONE);
+
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
         FirebaseUser user = mAuth.getCurrentUser();
-        String Uid = user.getUid();
-        databaseReference.child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String name = snapshot.child("fullName").getValue(String.class);
-                    String admin = snapshot.child("admin").getValue(String.class);
-                    if (admin != null && admin.equals("No")) {
-                        finish();
+        if (user != null) {
+            String Uid = user.getUid();
+            databaseReference.child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String name = snapshot.child("fullName").getValue(String.class);
+                        String admin = snapshot.child("admin").getValue(String.class);
+                        if (admin != null && admin.equals("No")) {
+                            finish();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Handle error
+                    Toast.makeText(MakeCrActivity.this, "Error fetching admin status", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,10 +105,11 @@ public class MakeCrActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 count = 0; // Reset count before searching
+                
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     if (userSnapshot.exists()) {
-                        String roll = userSnapshot.child("rollNumber").getValue().toString();
-                        if (roll.equals(rollNo)) {
+                        String roll = userSnapshot.child("rollNumber").getValue(String.class);
+                        if (roll != null && roll.equals(rollNo)) {
                             count = 1;
                             uid = userSnapshot.getKey();
                             String fullName = userSnapshot.child("fullName").getValue(String.class);
@@ -161,6 +168,7 @@ public class MakeCrActivity extends AppCompatActivity {
                     });
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -186,5 +194,4 @@ public class MakeCrActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }
